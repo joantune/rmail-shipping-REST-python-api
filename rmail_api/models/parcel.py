@@ -14,7 +14,7 @@ import pprint
 import re  # noqa: F401
 
 import six
-from rmail_api.models.big_decimal import BigDecimal  # noqa: F401,E501
+#from rmail_api.models.big_decimal import BigDecimal  # noqa: F401,E501
 from rmail_api.models.content_detail import ContentDetail  # noqa: F401,E501
 from rmail_api.models.measurement import Measurement  # noqa: F401,E501
 

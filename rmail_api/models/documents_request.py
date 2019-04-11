@@ -14,7 +14,7 @@ import pprint
 import re  # noqa: F401
 
 import six
-from rmail_api.models.big_decimal import BigDecimal  # noqa: F401,E501
+#from rmail_api.models.big_decimal import BigDecimal  # noqa: F401,E501
 
 
 class DocumentsRequest(object):
