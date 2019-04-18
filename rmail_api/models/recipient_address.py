@@ -293,8 +293,9 @@ class RecipientAddress(object):
         :param post_code: The post_code of this RecipientAddress.  # noqa: E501
         :type: str
         """
-        if post_code is None:
-            raise ValueError("Invalid value for `post_code`, must not be `None`")  # noqa: E501
+        #this validation is not needed!! (when deserializing DS from label generation it would crash the thing)
+        # if post_code is None:
+        #     raise ValueError("Invalid value for `post_code`, must not be `None`")  # noqa: E501
 
         self._post_code = post_code
 
