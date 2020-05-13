@@ -1,6 +1,6 @@
-#Command that generates the rmail-api directory - using swagger-codegen v3.0.7
+#Command that generates the rmail-api directory - using swagger-codegen v3.0.19
 
-# OLD: `swagger-codegen generate  --invoker-package rmail_api --api-package api -i RoyalMailAPIShippingV2.yaml --lang python -o rmail_api -c swagger_options.json`
-swagger-codegen generate  -i RoyalMailAPIShippingV2.yaml --lang python -o rmail_api -c swagger_options.json
+# OLD: `swagger-codegen generate  --invoker-package rmail_api --api-package api -i RoyalMailAPIShippingV3.yaml --lang python -o rmail_api -c swagger_options.json`
+swagger-codegen generate  -i RoyalMailAPIShippingV3.yaml --lang python -o rmail_api -c swagger_options.json
 
 #and then: `python3.7 rmail_api\setup.py install`
