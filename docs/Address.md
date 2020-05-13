@@ -3,15 +3,21 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**building_name** | **str** | This field will be used if supplied but is not necessary to process a shipment. It does not replace the need for a full addressLine1 input. | [optional] 
-**building_number** | **str** | This field will be used if supplied but is not necessary to process a shipment. It does not replace the need for a full addressLine1 input. | [optional] 
-**address_line1** | **str** | First line of the address. | 
-**address_line2** | **str** | Second line of the address | [optional] 
-**address_line3** | **str** | Third line of the address | [optional] 
-**post_town** | **str** | Town or City. The postTown will be updated to match the postTown resolved postcode. | 
-**county** | **str** | County of address. Mandatory for state &amp; provinces in the US, Canada or Australia. | [optional] 
-**post_code** | **str** | Mandatory for UK addresses. If the Shipment Type is “Return” then this must match the postcode of the registered return address. | 
-**country_code** | **str** | The relevant country&#x27;s 2-digit ISO code for the address. Note that this field is case sensitive.   Optional for domestic shipments.    - If supplied, must be UK country code. One of GB,JE,GE or JM.  Mandatory for international shipments.    - DO NOT USE UK country codes. For the list of allowable values, please go to API Shipping V2 page on the Royal Mail API (Developer) Portal and refer to API Shipping Reference Data. | [optional] 
+**address_id** | **str** | Address ID&lt;br /&gt;Your unique identifier for this address.&lt;br /&gt;If not provided, a GUID will be generated. | [optional] 
+**is_return_address** | **bool** | Is Return Address&lt;br /&gt;If true, then this address is also available as a return address. | 
+**company_name** | **str** | Company Name&lt;br /&gt;*Ignored if is a return address* | [optional] 
+**contact_name** | **str** | Contact Name / Return Name | 
+**address_line1** | **str** | Address Line 1 | 
+**address_line2** | **str** | Address Line 2 | [optional] 
+**address_line3** | **str** | Address Line 3 | [optional] 
+**town** | **str** | Town | 
+**county** | **str** | County / State / Province&lt;br /&gt;Conditional dependent on country.&lt;br /&gt;USA, Australia and Canada all require a valid state code or name. | [optional] 
+**country_code** | **str** | Country Code&lt;br /&gt;[ISO Alpha-2 Country Code](https://www.nationsonline.org/oneworld/country_code_list.htm) per ISO 3166 Standard&lt;br /&gt;*Required to be GB if is a return address* | 
+**postcode** | **str** | Postcode / Zip&lt;br /&gt;Required for domestic addresses and some international addresses. | [optional] 
+**phone_number** | **str** | Contact Phone Number&lt;br /&gt;Required for destination addresses where SMS notifications are requested.&lt;br /&gt;(Service Enhancement Code 13 or 16)&lt;br /&gt;*Ignored if is a return address* | [optional] 
+**email_address** | **str** | Contact Email Address&lt;br /&gt;Required for destination addresses where email notifications are requested.&lt;br /&gt;(Service Enhancement Code 14 or 16)&lt;br /&gt;*Ignored if is a Return Address* | [optional] 
+**vat_number** | **str** | VAT Number&lt;br /&gt;*Ignored if is a return address* | [optional] 
+**safeplace** | **str** | Safeplace&lt;br /&gt;Free text to describe a safe place to leave the parcel if the service allows it.&lt;br /&gt;*Ignored if is a return address* | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
