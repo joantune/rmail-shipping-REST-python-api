@@ -102,8 +102,9 @@ class CreateShipmentServiceOptions(object):
         :param posting_location: The posting_location of this CreateShipmentServiceOptions.  # noqa: E501
         :type: str
         """
-        if posting_location is None:
-            raise ValueError("Invalid value for `posting_location`, must not be `None`")  # noqa: E501
+        # allows none posting location
+        # if posting_location is None:
+        #     raise ValueError("Invalid value for `posting_location`, must not be `None`")  # noqa: E501
 
         self._posting_location = posting_location
 

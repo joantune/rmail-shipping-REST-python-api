@@ -62,7 +62,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
-.idea/
-.DS_Store
-.swagger-codegen-ignore
 
+.DS_Store
+.idea/
+.swagger-codegen-ignore
