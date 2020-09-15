@@ -61,6 +61,11 @@ paths:
                 TrackingNumber: TT0213546985GB
                 TrackingUrl: https://www.royalmail.com/track-your-item#/tracking-results/TT0213546985GB
                 CarrierCode: RMG
+              Routing:
+                InwardCode: "D44"
+                OutwardCode: "Q30"
+                Walk: ""
+                Loop: ""
               LabelImageFormat: PDF
               LabelImages: iVBORw0KGgoAAAANSUhEUgAAAGgA ... AABoAQMAAAAn0ifiAAAAAXNSR0IArs4c6
               HttpStatusCode: 200
@@ -3594,6 +3599,9 @@ definitions:
         xml:
           name: Packages
           wrapped: true
+      Routing:
+        description: Routing information <br/> including Gazetteer code
+        $ref: '#/definitions/RoutingResponse'
       LabelImageFormat:
         description: Label Image Format
         enum:
@@ -3658,6 +3666,32 @@ definitions:
           wrapped: true
     xml:
       name: ShipmentCreateResponse
+  RoutingResponse:
+    description: Routing information - including Gazetteer code
+    type: object
+    properties:
+      InwardCode:
+        format: string
+        description: "Inward code - (??) - first component of Gazetteer code"
+        example: "D44"
+        minimum: 0
+        maximum: 32
+      OutwardCode:
+        format: string
+        description: "Outward code - (??) - second component of Gazetteer code"
+        example: "Q30"
+        minimum: 0
+        maximum: 32
+      Walk:
+        format: string
+        description: "??"
+        minimum: 0
+        maximum: 1024
+      Loop:
+        format: string
+        description: "??"
+        minimum: 0
+        maximum: 1024
   PackageResponse:
     description: Individual Package Response within a Shipment Response.<br />Every
       successful response will have one of these per package request.

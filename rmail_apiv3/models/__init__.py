@@ -36,6 +36,7 @@ from rmail_apiv3.models.print_document_request import PrintDocumentRequest
 from rmail_apiv3.models.print_document_response import PrintDocumentResponse
 from rmail_apiv3.models.print_label_request import PrintLabelRequest
 from rmail_apiv3.models.print_label_response import PrintLabelResponse
+from rmail_apiv3.models.routing_response import RoutingResponse
 from rmail_apiv3.models.service_availability_destination import ServiceAvailabilityDestination
 from rmail_apiv3.models.service_availability_format import ServiceAvailabilityFormat
 from rmail_apiv3.models.service_availability_option import ServiceAvailabilityOption

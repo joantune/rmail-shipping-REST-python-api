@@ -32,6 +32,7 @@ class ShipmentCreateResponse(object):
         'consignment_number': 'str',
         'consignment_tracking_url': 'str',
         'packages': 'list[PackageResponse]',
+        'routing': 'RoutingResponse',
         'label_image_format': 'str',
         'label_images': 'str',
         'customs_documents': 'str',
@@ -47,6 +48,7 @@ class ShipmentCreateResponse(object):
         'consignment_number': 'ConsignmentNumber',
         'consignment_tracking_url': 'ConsignmentTrackingUrl',
         'packages': 'Packages',
+        'routing': 'Routing',
         'label_image_format': 'LabelImageFormat',
         'label_images': 'LabelImages',
         'customs_documents': 'CustomsDocuments',
@@ -58,11 +60,12 @@ class ShipmentCreateResponse(object):
         'errors': 'Errors'
     }
 
-    def __init__(self, consignment_number=None, consignment_tracking_url=None, packages=None, label_image_format=None, label_images=None, customs_documents=None, return_label_image_format=None, return_label_images=None, http_status_code=None, http_status_description=None, message=None, errors=None):  # noqa: E501
+    def __init__(self, consignment_number=None, consignment_tracking_url=None, packages=None, routing=None, label_image_format=None, label_images=None, customs_documents=None, return_label_image_format=None, return_label_images=None, http_status_code=None, http_status_description=None, message=None, errors=None):  # noqa: E501
         """ShipmentCreateResponse - a model defined in Swagger"""  # noqa: E501
         self._consignment_number = None
         self._consignment_tracking_url = None
         self._packages = None
+        self._routing = None
         self._label_image_format = None
         self._label_images = None
         self._customs_documents = None
@@ -79,6 +82,8 @@ class ShipmentCreateResponse(object):
             self.consignment_tracking_url = consignment_tracking_url
         if packages is not None:
             self.packages = packages
+        if routing is not None:
+            self.routing = routing
         if label_image_format is not None:
             self.label_image_format = label_image_format
         if label_images is not None:
@@ -164,6 +169,27 @@ class ShipmentCreateResponse(object):
         """
 
         self._packages = packages
+
+    @property
+    def routing(self):
+        """Gets the routing of this ShipmentCreateResponse.  # noqa: E501
+
+
+        :return: The routing of this ShipmentCreateResponse.  # noqa: E501
+        :rtype: RoutingResponse
+        """
+        return self._routing
+
+    @routing.setter
+    def routing(self, routing):
+        """Sets the routing of this ShipmentCreateResponse.
+
+
+        :param routing: The routing of this ShipmentCreateResponse.  # noqa: E501
+        :type: RoutingResponse
+        """
+
+        self._routing = routing
 
     @property
     def label_image_format(self):

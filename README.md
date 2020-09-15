@@ -200,6 +200,7 @@ Class | Method | HTTP request | Description
  - [PrintDocumentResponse](docs/PrintDocumentResponse.md)
  - [PrintLabelRequest](docs/PrintLabelRequest.md)
  - [PrintLabelResponse](docs/PrintLabelResponse.md)
+ - [RoutingResponse](docs/RoutingResponse.md)
  - [ServiceAvailabilityDestination](docs/ServiceAvailabilityDestination.md)
  - [ServiceAvailabilityFormat](docs/ServiceAvailabilityFormat.md)
  - [ServiceAvailabilityOption](docs/ServiceAvailabilityOption.md)
