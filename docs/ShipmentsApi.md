@@ -1,284 +1,161 @@
-# rmail_apiv3.ShipmentsApi
+# rmail_apiv4.ShipmentsApi
 
-All URIs are relative to */shipping/v3*
+All URIs are relative to *https://api.proshipping.net/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**shipments_cancel**](ShipmentsApi.md#shipments_cancel) | **PUT** /shipments/cancel | Cancel Shipments
-[**shipments_create**](ShipmentsApi.md#shipments_create) | **POST** /shipments | Create Shipment
-[**shipments_defer**](ShipmentsApi.md#shipments_defer) | **PUT** /shipments/defer | Defer Shipments
-[**shipments_hold**](ShipmentsApi.md#shipments_hold) | **PUT** /shipments/hold | Hold Shipments
-[**shipments_print_document**](ShipmentsApi.md#shipments_print_document) | **PUT** /shipments/{shipmentId}/printDocument | Print Document
-[**shipments_print_label**](ShipmentsApi.md#shipments_print_label) | **PUT** /shipments/{shipmentId}/printLabel | Print Label
-[**shipments_release**](ShipmentsApi.md#shipments_release) | **PUT** /shipments/release | Release Shipments
-[**shipments_service_availability**](ShipmentsApi.md#shipments_service_availability) | **POST** /shipments/serviceAvailability | Service Availability
+[**v4_shipments_defer_put**](ShipmentsApi.md#v4_shipments_defer_put) | **PUT** /v4/shipments/defer | Defer Shipments
+[**v4_shipments_preallocate_tracking_number_rm_post**](ShipmentsApi.md#v4_shipments_preallocate_tracking_number_rm_post) | **POST** /v4/shipments/preallocateTrackingNumber/rm | Pre Allocate Tracking Number
+[**v4_shipments_print_document_carrier_code_shipment_id_post**](ShipmentsApi.md#v4_shipments_print_document_carrier_code_shipment_id_post) | **POST** /v4/shipments/printDocument/{carrierCode}/{shipmentId} | Print Document
+[**v4_shipments_print_label_rm_shipment_id_get**](ShipmentsApi.md#v4_shipments_print_label_rm_shipment_id_get) | **GET** /v4/shipments/printLabel/rm/{shipmentId} | Print Label
+[**v4_shipments_print_my_label_qr_code_rm_shipment_id_get**](ShipmentsApi.md#v4_shipments_print_my_label_qr_code_rm_shipment_id_get) | **GET** /v4/shipments/printMyLabelQRCode/rm/{shipmentId} | Print My Label QR Code
+[**v4_shipments_rm_post**](ShipmentsApi.md#v4_shipments_rm_post) | **POST** /v4/shipments/rm | Create Shipment
+[**v4_shipments_shipping_location_id_get**](ShipmentsApi.md#v4_shipments_shipping_location_id_get) | **GET** /v4/shipments/{shippingLocationId} | Get Shipments
+[**v4_shipments_status_put**](ShipmentsApi.md#v4_shipments_status_put) | **PUT** /v4/shipments/status | Update Status
 
-# **shipments_cancel**
-> ShipmentsCancelResponse shipments_cancel(body, x_rmg_auth_token)
-
-Cancel Shipments
-
-Can be used to cancel/void one or more current shipping labels.<br />This service can only be used before the shipment has been confirmed either by calling the manifest create request or by closing out via the User Interface.<br />There can be a maximum of 99 cancellation requests per call.
-
-### Example
-```python
-from __future__ import print_function
-import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
-from pprint import pprint
-
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
-
-# create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = [rmail_apiv3.ShipmentCancelRequest()] # list[ShipmentCancelRequest] | Shipment Cancel Requests
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
-
-try:
-    # Cancel Shipments
-    api_response = api_instance.shipments_cancel(body, x_rmg_auth_token)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_cancel: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**list[ShipmentCancelRequest]**](ShipmentCancelRequest.md)| Shipment Cancel Requests | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
-
-### Return type
-
-[**ShipmentsCancelResponse**](ShipmentsCancelResponse.md)
-
-### Authorization
-
-[clientID](../README.md#clientID)
-
-### HTTP request headers
-
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **shipments_create**
-> ShipmentCreateResponse shipments_create(body, x_rmg_auth_token)
-
-Create Shipment
-
-Use to generate the final delivery label for your packages.<br />            <br />The request is split into several sections:<br />            <br />**Shipper** - who and where the parcel is coming from - optional if the posting location is to be used.<br />**Destination** - who and where the parcel is going to.<br />**Shipment Information** - overall package details, individual item details and requested service information.
-
-### Example
-```python
-from __future__ import print_function
-import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
-from pprint import pprint
-
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
-
-# create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = rmail_apiv3.CreateShipmentShipment() # CreateShipmentShipment | The shipment.
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
-
-try:
-    # Create Shipment
-    api_response = api_instance.shipments_create(body, x_rmg_auth_token)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_create: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**CreateShipmentShipment**](CreateShipmentShipment.md)| The shipment. | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
-
-### Return type
-
-[**ShipmentCreateResponse**](ShipmentCreateResponse.md)
-
-### Authorization
-
-[clientID](../README.md#clientID)
-
-### HTTP request headers
-
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **shipments_defer**
-> ShipmentsDeferResponse shipments_defer(body, x_rmg_auth_token)
+# **v4_shipments_defer_put**
+> v4_shipments_defer_put(body=body)
 
 Defer Shipments
 
-Used to update the shipment shipping date for a current shipment.<br />A shipment can be deferred by a maximum of 28 days from the date of the request.<br />This service can only be used before the shipment has been confirmed either by calling the manifest create request or by closing out via the User Interface.<br />There can be a maximum of 99 defer requests per call.
+Used to update the shipment shipping data for a current shipment. <br />A shipment can be deferred by a maximum of 28 days from the date of the request. <br />This service can only be used before the shipment has been manifested. <br />There can be a maximum of 99 defer requests per call.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = [rmail_apiv3.ShipmentDeferRequest()] # list[ShipmentDeferRequest] | The shipments to defer.
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+body = [rmail_apiv4.DeferShipmentRequest()] # list[DeferShipmentRequest] | Defer shipment requests (optional)
 
 try:
     # Defer Shipments
-    api_response = api_instance.shipments_defer(body, x_rmg_auth_token)
-    pprint(api_response)
+    api_instance.v4_shipments_defer_put(body=body)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_defer: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_defer_put: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**list[ShipmentDeferRequest]**](ShipmentDeferRequest.md)| The shipments to defer. | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
+ **body** | [**list[DeferShipmentRequest]**](DeferShipmentRequest.md)| Defer shipment requests | [optional] 
 
 ### Return type
 
-[**ShipmentsDeferResponse**](ShipmentsDeferResponse.md)
+void (empty response body)
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **shipments_hold**
-> ShipmentsHoldResponse shipments_hold(body, x_rmg_auth_token)
+# **v4_shipments_preallocate_tracking_number_rm_post**
+> PreAllocateTrackingNumberResponse v4_shipments_preallocate_tracking_number_rm_post(body=body)
 
-Hold Shipments
+Pre Allocate Tracking Number
 
-Used to put a shipment on hold indefinitely.<br />A shipment on hold will not be included in any closeouts, but instead will remain in its current state.<br />Calling printLabel will release the shipment from being held.<br />This service can only be used before the shipment has been confirmed either by calling the manifest create request or by closing out via the User Interface.<br />            <br />A hold reason must be provided and must match those set in Pro Shipping under your maintenance screens.<br />If no hold reasons exist, then shipments cannot be put on hold.<br />            <br />There can be a maximum of 99 hold requests per call.
+This service can be used to receive a Royal Mail Tracking Number that will be pre-allocated to the service and destination supplied in the request. No shipment or label will be produced from this service. <br />This service can only be used for services that are assigned a tracking number. <br />This service must be used in conjunction with CreateShipment service populating the TrackingNumber in the CarrierSpecifics /PreAllocatedBarcode section with the pre-allocated TrackingNumber returned in this service response.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = [rmail_apiv3.ShipmentHoldRequest()] # list[ShipmentHoldRequest] | The shipments to hold.
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+body = rmail_apiv4.PreAllocateTrackingNumberRequest() # PreAllocateTrackingNumberRequest | The request. (optional)
 
 try:
-    # Hold Shipments
-    api_response = api_instance.shipments_hold(body, x_rmg_auth_token)
+    # Pre Allocate Tracking Number
+    api_response = api_instance.v4_shipments_preallocate_tracking_number_rm_post(body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_hold: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_preallocate_tracking_number_rm_post: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**list[ShipmentHoldRequest]**](ShipmentHoldRequest.md)| The shipments to hold. | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
+ **body** | [**PreAllocateTrackingNumberRequest**](PreAllocateTrackingNumberRequest.md)| The request. | [optional] 
 
 ### Return type
 
-[**ShipmentsHoldResponse**](ShipmentsHoldResponse.md)
+[**PreAllocateTrackingNumberResponse**](PreAllocateTrackingNumberResponse.md)
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **shipments_print_document**
-> PrintDocumentResponse shipments_print_document(body, x_rmg_auth_token, shipment_id)
+# **v4_shipments_print_document_carrier_code_shipment_id_post**
+> PrintDocumentResponse v4_shipments_print_document_carrier_code_shipment_id_post(carrier_code, shipment_id, body=body)
 
 Print Document
 
-Prints the requested document for the shipment.<br />If item information, description of goods or reason for export have not been provided then the document cannot be printed.<br />            <br />This service can only be used before the shipment has been confirmed either by calling the manifest create request or by closing out via the User Interface.
+Request the associated Customs Documents for the printed label.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = rmail_apiv3.PrintDocumentRequest() # PrintDocumentRequest | Print Document Request
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
-shipment_id = 'shipment_id_example' # str | Shipment Id<br />The tracking number or Unique Id of the shipment to print.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+carrier_code = 'carrier_code_example' # str | Carrier Code
+shipment_id = 'shipment_id_example' # str | Shipment Id <br />The Shipment Id may be an id or a tracking/barcode number.
+body = rmail_apiv4.PrintDocumentRequest() # PrintDocumentRequest | Print Document Request (optional)
 
 try:
     # Print Document
-    api_response = api_instance.shipments_print_document(body, x_rmg_auth_token, shipment_id)
+    api_response = api_instance.v4_shipments_print_document_carrier_code_shipment_id_post(carrier_code, shipment_id, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_print_document: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_print_document_carrier_code_shipment_id_post: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PrintDocumentRequest**](PrintDocumentRequest.md)| Print Document Request | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
- **shipment_id** | **str**| Shipment Id&lt;br /&gt;The tracking number or Unique Id of the shipment to print. | 
+ **carrier_code** | **str**| Carrier Code | 
+ **shipment_id** | **str**| Shipment Id &lt;br /&gt;The Shipment Id may be an id or a tracking/barcode number. | 
+ **body** | [**PrintDocumentRequest**](PrintDocumentRequest.md)| Print Document Request | [optional] 
 
 ### Return type
 
@@ -286,182 +163,289 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **shipments_print_label**
-> PrintLabelResponse shipments_print_label(body, x_rmg_auth_token, shipment_id)
+# **v4_shipments_print_label_rm_shipment_id_get**
+> RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPrintLabelResponse v4_shipments_print_label_rm_shipment_id_get(shipment_id, label_format=label_format)
 
 Print Label
 
-Prints the label for the shipment.<br />Moves the shipment to processed, ready to manifest, if the shipment was not already in a processed state.<br />This service can only be used before the shipment has been confirmed either by calling the manifest create request or by closing out via the User Interface.<br />**On Hold Shipment**<br />Calling print label on a held shipment will release the shipment from hold and update the shipment date to today.
+This changes the status of the shipment to label printed. This should be done at the time of actual printing or label creation dependent on how you operate in reality. Shipments must be updated to printed status prior to manifesting.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = rmail_apiv3.PrintLabelRequest() # PrintLabelRequest | Print Label Request
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
-shipment_id = 'shipment_id_example' # str | Shipment Id<br />The tracking number or Unique Id of the shipment to print.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+shipment_id = 'shipment_id_example' # str | Shipment Id <br />The Shipment Id may be an id or a tracking/barcode number.
+label_format = rmail_apiv4.RoyalMailLabelFormat() # RoyalMailLabelFormat | Label Format <br />             <br />**PDF** Base 64 encoded PDF <br />**PNG** Base 64 encoded PNG <br />**DATASTREAM** - Label components broken down into a data-stream, for you to draw your own label <br />**ZPL203DPI** Base 64 encoded text for Zebra printer at 203 DPI <br />**ZPL300DPI** Base 64 encoded text for Zebra printer at 300 DPI <br />             <br />*DATASTREAM is only available if it has been activated on your account.* <br />             <br />Defaults To PDF (optional)
 
 try:
     # Print Label
-    api_response = api_instance.shipments_print_label(body, x_rmg_auth_token, shipment_id)
+    api_response = api_instance.v4_shipments_print_label_rm_shipment_id_get(shipment_id, label_format=label_format)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_print_label: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_print_label_rm_shipment_id_get: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PrintLabelRequest**](PrintLabelRequest.md)| Print Label Request | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
- **shipment_id** | **str**| Shipment Id&lt;br /&gt;The tracking number or Unique Id of the shipment to print. | 
+ **shipment_id** | **str**| Shipment Id &lt;br /&gt;The Shipment Id may be an id or a tracking/barcode number. | 
+ **label_format** | [**RoyalMailLabelFormat**](.md)| Label Format &lt;br /&gt;             &lt;br /&gt;**PDF** Base 64 encoded PDF &lt;br /&gt;**PNG** Base 64 encoded PNG &lt;br /&gt;**DATASTREAM** - Label components broken down into a data-stream, for you to draw your own label &lt;br /&gt;**ZPL203DPI** Base 64 encoded text for Zebra printer at 203 DPI &lt;br /&gt;**ZPL300DPI** Base 64 encoded text for Zebra printer at 300 DPI &lt;br /&gt;             &lt;br /&gt;*DATASTREAM is only available if it has been activated on your account.* &lt;br /&gt;             &lt;br /&gt;Defaults To PDF | [optional] 
 
 ### Return type
 
-[**PrintLabelResponse**](PrintLabelResponse.md)
+[**RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPrintLabelResponse**](RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPrintLabelResponse.md)
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **shipments_release**
-> ShipmentsReleaseResponse shipments_release(body, x_rmg_auth_token)
+# **v4_shipments_print_my_label_qr_code_rm_shipment_id_get**
+> QRCodeResponse v4_shipments_print_my_label_qr_code_rm_shipment_id_get(shipment_id)
 
-Release Shipments
+Print My Label QR Code
 
-Used to release a shipment from being on hold.<br />This service can only be used for shipments on hold.<br />            <br />Releasing a shipment from hold will update the shipment date to today's date and if the shipment is processed it will be included the next requested manifest.<br />            <br />There can be a maximum of 99 release requests per call.
+Request associated QR Code for the associated label in the print label call. <br />This is only available for Royal Mail Tracked Return Services.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = rmail_apiv3.ShipmentsReleaseRequest() # ShipmentsReleaseRequest | Shipments Release Request
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+shipment_id = 'shipment_id_example' # str | Shipment Id <br />The Shipment Id may be an id or a tracking/barcode number.
 
 try:
-    # Release Shipments
-    api_response = api_instance.shipments_release(body, x_rmg_auth_token)
+    # Print My Label QR Code
+    api_response = api_instance.v4_shipments_print_my_label_qr_code_rm_shipment_id_get(shipment_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_release: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_print_my_label_qr_code_rm_shipment_id_get: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ShipmentsReleaseRequest**](ShipmentsReleaseRequest.md)| Shipments Release Request | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
+ **shipment_id** | **str**| Shipment Id &lt;br /&gt;The Shipment Id may be an id or a tracking/barcode number. | 
 
 ### Return type
 
-[**ShipmentsReleaseResponse**](ShipmentsReleaseResponse.md)
+[**QRCodeResponse**](QRCodeResponse.md)
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **shipments_service_availability**
-> ServiceAvailabilityResponse shipments_service_availability(body, x_rmg_auth_token)
+# **v4_shipments_rm_post**
+> RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPackageResponseCreateShipmentResponse v4_shipments_rm_post(body=body)
 
-Service Availability
+Create Shipment
 
-Retrieve a list of available services for a potential shipment.<br />            <br />**Destination** - where the parcel is going to.<br />**Shipment Information** - overall package details and requested service requirements.
+Create a Royal Mail shipment. This will return an image of the shipping label in PDF, PNG or ZPL format.
 
 ### Example
 ```python
 from __future__ import print_function
 import time
-import rmail_apiv3
-from rmail_apiv3.rest import ApiException
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
 from pprint import pprint
 
-# Configure API key authorization: clientID
-configuration = rmail_apiv3.Configuration()
-configuration.api_key['X-IBM-Client-Id'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-IBM-Client-Id'] = 'Bearer'
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = rmail_apiv3.ShipmentsApi(rmail_apiv3.ApiClient(configuration))
-body = rmail_apiv3.ServiceAvailabilityShipment() # ServiceAvailabilityShipment | The shipment.
-x_rmg_auth_token = 'x_rmg_auth_token_example' # str | Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation.
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+body = rmail_apiv4.RoyalMailShipmentRequestCarrierSpecificsRoyalMailPackageRoyalMailLabelFormatCreateShipmentRequest() # RoyalMailShipmentRequestCarrierSpecificsRoyalMailPackageRoyalMailLabelFormatCreateShipmentRequest | Shipment Details (optional)
 
 try:
-    # Service Availability
-    api_response = api_instance.shipments_service_availability(body, x_rmg_auth_token)
+    # Create Shipment
+    api_response = api_instance.v4_shipments_rm_post(body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ShipmentsApi->shipments_service_availability: %s\n" % e)
+    print("Exception when calling ShipmentsApi->v4_shipments_rm_post: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ServiceAvailabilityShipment**](ServiceAvailabilityShipment.md)| The shipment. | 
- **x_rmg_auth_token** | **str**| Authorisation token required to invoke this operation. Can be retrieved by invoking the **/token** operation. | 
+ **body** | [**RoyalMailShipmentRequestCarrierSpecificsRoyalMailPackageRoyalMailLabelFormatCreateShipmentRequest**](RoyalMailShipmentRequestCarrierSpecificsRoyalMailPackageRoyalMailLabelFormatCreateShipmentRequest.md)| Shipment Details | [optional] 
 
 ### Return type
 
-[**ServiceAvailabilityResponse**](ServiceAvailabilityResponse.md)
+[**RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPackageResponseCreateShipmentResponse**](RoyalMailLabelFormatRoyalMailShipmentResponseCarrierSpecificsPackageResponseCreateShipmentResponse.md)
 
 ### Authorization
 
-[clientID](../README.md#clientID)
+[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml, application/json
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **v4_shipments_shipping_location_id_get**
+> ShipmentsPagedResponse v4_shipments_shipping_location_id_get(shipping_location_id, shipping_account_id=shipping_account_id, carrier_code=carrier_code, status=status, destination_country_code=destination_country_code, date_from=date_from, date_to=date_to, page_size=page_size, page_number=page_number)
+
+Get Shipments
+
+Provides a list of shipments for the specified shipping location in a given time period.
+
+### Example
+```python
+from __future__ import print_function
+import time
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
+from pprint import pprint
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# create an instance of the API class
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+shipping_location_id = 'shipping_location_id_example' # str | Shipping Location Id <br />PRO SHIPPING Shipping Location Id (assigned by PRO SHIPPING) or Alias (assigned by you). <br />Filter by shipping location.
+shipping_account_id = 'shipping_account_id_example' # str | Shipping Account Id <br />PRO SHIPPING Shipping Account Id (assigned by PRO SHIPPING) or Alias (assigned by you). <br />Filter by shipping account. (optional)
+carrier_code = 'carrier_code_example' # str | Carrier Code <br />If shippingAccountId and carrier are both provided, then the value sent in the carrier field will be ignored and the carrier associated with the shipping account will be used. (optional)
+status = rmail_apiv4.GetShipmentsStatusType() # GetShipmentsStatusType | Status <br />Filter by shipment status. (optional)
+destination_country_code = 'destination_country_code_example' # str | Country Code <br />ISO Alpha-2 Country Code per ISO 3166 Standard. (optional)
+date_from = '2013-10-20' # date | Date From <br />Defaults to Today's date if not provided. <br />Format: YYYY-MM-DD (optional)
+date_to = '2013-10-20' # date | Date To <br />Defaults to Today's date if not provided. <br />Format: YYYY-MM-DD (optional)
+page_size = 100 # int | The maximum number of records per page. (optional) (default to 100)
+page_number = 1 # int | The number of the requested page, starting at 1. (optional) (default to 1)
+
+try:
+    # Get Shipments
+    api_response = api_instance.v4_shipments_shipping_location_id_get(shipping_location_id, shipping_account_id=shipping_account_id, carrier_code=carrier_code, status=status, destination_country_code=destination_country_code, date_from=date_from, date_to=date_to, page_size=page_size, page_number=page_number)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ShipmentsApi->v4_shipments_shipping_location_id_get: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **shipping_location_id** | **str**| Shipping Location Id &lt;br /&gt;PRO SHIPPING Shipping Location Id (assigned by PRO SHIPPING) or Alias (assigned by you). &lt;br /&gt;Filter by shipping location. | 
+ **shipping_account_id** | **str**| Shipping Account Id &lt;br /&gt;PRO SHIPPING Shipping Account Id (assigned by PRO SHIPPING) or Alias (assigned by you). &lt;br /&gt;Filter by shipping account. | [optional] 
+ **carrier_code** | **str**| Carrier Code &lt;br /&gt;If shippingAccountId and carrier are both provided, then the value sent in the carrier field will be ignored and the carrier associated with the shipping account will be used. | [optional] 
+ **status** | [**GetShipmentsStatusType**](.md)| Status &lt;br /&gt;Filter by shipment status. | [optional] 
+ **destination_country_code** | **str**| Country Code &lt;br /&gt;ISO Alpha-2 Country Code per ISO 3166 Standard. | [optional] 
+ **date_from** | **date**| Date From &lt;br /&gt;Defaults to Today&#x27;s date if not provided. &lt;br /&gt;Format: YYYY-MM-DD | [optional] 
+ **date_to** | **date**| Date To &lt;br /&gt;Defaults to Today&#x27;s date if not provided. &lt;br /&gt;Format: YYYY-MM-DD | [optional] 
+ **page_size** | **int**| The maximum number of records per page. | [optional] [default to 100]
+ **page_number** | **int**| The number of the requested page, starting at 1. | [optional] [default to 1]
+
+### Return type
+
+[**ShipmentsPagedResponse**](ShipmentsPagedResponse.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **v4_shipments_status_put**
+> v4_shipments_status_put(body=body)
+
+Update Status
+
+**Hold** - Put the shipments on hold for up to 28 days. Shipments on hold for longer than 28 days will be cancelled. A shipment on hold will not be included in an closeouts/manifests, but instead will remain in its current state. You can only put shipments on hold that are in the 'LabelPrinted' status as only shipments with this status are included in manifests. <br />             <br />**Cancel** - Use to cancel/void one or more current shipments. This can only be used before a shipment has been confirmed by being manifested. <br />             <br />**Release** - Use to release shipments from hold and shipments cancelled for less than 24 hours. Once released, the shipment will be included in the next manifest. <br />             <br />**Picked** - Set the shipment to picked. This means this shipment will only be manifested if you choose to manifest 'Picked' shipments.
+
+### Example
+```python
+from __future__ import print_function
+import time
+import rmail_apiv4
+from rmail_apiv4.rest import ApiException
+from pprint import pprint
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = rmail_apiv4.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# create an instance of the API class
+api_instance = rmail_apiv4.ShipmentsApi(rmail_apiv4.ApiClient(configuration))
+body = rmail_apiv4.UpdateStatusRequest() # UpdateStatusRequest | Update Status Request (optional)
+
+try:
+    # Update Status
+    api_instance.v4_shipments_status_put(body=body)
+except ApiException as e:
+    print("Exception when calling ShipmentsApi->v4_shipments_status_put: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**UpdateStatusRequest**](UpdateStatusRequest.md)| Update Status Request | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
